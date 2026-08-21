@@ -16,6 +16,8 @@ test("User should be able to add all products to cart", async ({ page }) => {
     }
 
     // Verify cart count
-    await expect(page.locator("YOUR_CART_COUNT_SELECTOR"))
+    await expect(page.locator('[data-test="add-to-cart-test-allthethings-tshirt-red"]'))
         .toHaveText(String(productCount));
 });
+
+// await 
