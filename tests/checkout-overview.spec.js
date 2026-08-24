@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 
 const BASE_URL = "https://app.thetestingacademy.com/playwright/ttacart/checkout-step-two";
 
-test("Show burger menu", async ({ page }) => {
+test("Show Hamburger menu", async ({ page }) => {
   await page.goto(BASE_URL);
 
   await expect(page.locator('[data-test="open-menu"]')).toBeVisible();
@@ -23,7 +23,6 @@ test("Show Checkout Title", async ({ page }) => {
 
 test("Show Your Cart", async ({ page }) => {
   await page.goto(BASE_URL);
-
   await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
 });
 

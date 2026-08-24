@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 
+const BASE_URL = 'https://app.thetestingacademy.com/playwright/ttacart';
+
 test('Login with valid credentials', async ({ page }) => {
     // Open login page
-    await page.goto('https://app.thetestingacademy.com/playwright/ttacart/');
+    await page.goto(BASE_URL);
 
     // Enter username
     await page.getByRole('textbox', { name: 'Username' }).fill('standard_user');
@@ -19,7 +21,7 @@ test('Login with valid credentials', async ({ page }) => {
 
 test('Login with invalid credentials', async ({ page }) => {
     // Open login page
-    await page.goto('https://app.thetestingacademy.com/playwright/ttacart/');
+    await page.goto(BASE_URL);
 
     // Enter username
     // await page.getByPlaceholder('Username').fill('standard_user');
