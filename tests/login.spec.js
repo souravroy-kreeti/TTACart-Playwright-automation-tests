@@ -1,38 +1,27 @@
 import { test, expect } from '@playwright/test';
+import LoginPage from "../pages/LoginPage.js"
+import users from '../data/users.js';
 
-const BASE_URL = 'https://app.thetestingacademy.com/playwright/ttacart';
+test.describe("Login Page", () => {
 
-test('Login with valid credentials', async ({ page }) => {
-    // Open login page
-    await page.goto(BASE_URL);
+    let loginPage ;
+    const password = users.password ;
 
-    // Enter username
-    await page.getByRole('textbox', { name: 'Username' }).fill('standard_user');
+    test.beforeEach(async ({page}) => {
+        loginPage = new LoginPage(page) ;
+        await loginPage.goto() ;
+    });
 
-    // Enter password
-    await page.getByPlaceholder('Password').fill('tta_secret');
+    test('Login with valid credentials', async ({ page }) => {
 
-    // Click Login
-    await page.getByRole('button', { name: 'Login' }).click();
-
-    // Verify successful login
-    await expect(page).toHaveURL(/.*inventory/);
-});
-
-test('Login with invalid credentials', async ({ page }) => {
-    // Open login page
-    await page.goto(BASE_URL);
-
-    // Enter username
-    // await page.getByPlaceholder('Username').fill('standard_user');
-    await page.getByRole('textbox', { name: 'Username' }).fill('standard_user_sourav');
-
-    // Enter password
-    await page.getByPlaceholder('Password').fill('tta_secret');
-
-    // Click Login
-    await page.getByRole('button', { name: 'Login' }).click();
-
-    // Verify successful login
-    await expect(page).not.toHaveURL(/.*inventory/);
+        const user = users.standardUser.username ;
+        await loginPage.login(user, password) ;
+        await expect(page).toHaveURL(/.*inventory/);
+    });
+    
+    test('Login with invalid credentials', async ({ page }) => {
+        const user = "SOURAV_ROY" ;
+        await loginPage.login(user, password) ;
+        await expect(page).not.toHaveURL(/.*inventory/);
+    });
 });
