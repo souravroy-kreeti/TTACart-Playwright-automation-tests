@@ -1,11 +1,17 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
+import HamburgerPage from "../pages/HamburgerPage";
 
-const BASE_URL = 'https://app.thetestingacademy.com/playwright/ttacart/inventory';
+test.describe("Inventory Page", () => {
 
-test('Login with valid credentials', async ({ page }) => {
-    await page.goto(BASE_URL);
- 
-    await page.locator('[data-test="open-menu"]').click();
+    let hamburgerPage;
 
-    await expect(page.locator('[data-test="side-menu"]')).toHaveClass(/side-menu is-open/);
+    test.beforeEach(async ({ page }) => {
+        hamburgerPage = new HamburgerPage(page);
+        await hamburgerPage.goto();
+    });
+
+    test("Show Hamburger menu", async () => {
+        await hamburgerPage.clickHamburgerMenu();
+        await expect(hamburgerPage.sideMenu).toHaveClass(/side-menu is-open/);
+    });
 });

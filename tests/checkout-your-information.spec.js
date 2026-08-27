@@ -1,50 +1,48 @@
-// @ts-check
 import { test, expect } from "@playwright/test";
+import CheckoutInformationPage from "../pages/CheckoutYourInformationPage.js";
 
-const BASE_URL = "https://app.thetestingacademy.com/playwright/ttacart/checkout-step-one";
+test.describe("Checkout Your Information Page", () => {
 
-test("Show Hamburger menu", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="open-menu"]')).toBeVisible();
-});
+    let checkoutInformation ;
 
-test("Show Title", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator(".tta-brand-title")).toContainText("TTACart");
-});
+    test.beforeEach(async ({ page }) => {
+        checkoutInformation = new CheckoutInformationPage(page);
+        await checkoutInformation.goto();
+    });
 
-test("Show Checkout Title", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="title"]')).toContainText("Checkout: Your Information");
-});
+    test("Show Hamburger menu", async () => {
+        await expect(checkoutInformation.hamburgerMenu).toBeVisible();
+    });
 
-test("Show Your Cart", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
-});
+    test("Show Title", async () => {
+        await expect(checkoutInformation.brandTitle).toContainText("TTACart");
+    });
 
-test("Show First Name", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="firstName"]')).toBeVisible() ;
-});
+    test("Show Checkout Title", async () => {
+        await expect(checkoutInformation.checkoutTitle).toContainText("Checkout: Your Information");
+    });
 
-test("Show Last Name", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="lastName"]')).toBeVisible() ;
-});
+    test("Show Your Cart", async () => {
+        await expect(checkoutInformation.shoppingCartLink).toBeVisible();
+    });
 
-test("Show Postal Code", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="postalCode"]')).toBeVisible() ;
-});
+    test("Show First Name", async () => {
+        await expect(checkoutInformation.firstName).toBeVisible();
+    });
 
-test("Show Cancel Button", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="cancel"]')).toContainText("Cancel");
-});
+    test("Show Last Name", async () => {
+        await expect(checkoutInformation.lastName).toBeVisible();
+    });
 
-test("Show Continue Button", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="continue"]')).toContainText("Continue");
+    test("Show Postal Code", async () => {
+        await expect(checkoutInformation.postalCode).toBeVisible();
+    });
 
+    test("Show Cancel Button", async () => {
+        await expect(checkoutInformation.cancelButton).toContainText("Cancel");
+    });
+
+    test("Show Continue Button", async () => {
+        await expect(checkoutInformation.continueButton).toContainText("Continue");
+    });
 });
