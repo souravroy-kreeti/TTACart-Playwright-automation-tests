@@ -11,7 +11,7 @@ class LoginPage
     this.loginHint = page.locator("div.login-hint");
     this.errorMessage = page.getByRole("alert");
   }
-
+ 
   async goto() {
     await this.page.goto(
       "https://app.thetestingacademy.com/playwright/ttacart/",

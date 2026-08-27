@@ -1,43 +1,43 @@
 import { test, expect } from "@playwright/test";
+import CheckoutCompletePage from "../pages/CheckoutCompletePage";
 
-const BASE_URL = "https://app.thetestingacademy.com/playwright/ttacart/checkout-complete";
+test.describe("Checkout Complete Page", () => {
+  let checkoutComplete ;
 
-test("Show Hamburger menu", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="open-menu"]')).toBeVisible();
-});
+  test.beforeEach(async ({page}) => {
+    checkoutComplete = new CheckoutCompletePage(page);
+    await checkoutComplete.goto() ;
+  });
 
-test("Show Title", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator(".tta-brand-title")).toContainText("TTACart");
-});
+  test("Show Hamburger menu", async ({ page }) => {
+    await expect(checkoutComplete.hamburgerMenu).toBeVisible();
+  });
+  
+  test("Show Title", async ({ page }) => {
+    await expect(checkoutComplete.brandTitle).toContainText("TTACart");
+  });
 
-test("Show Checkout Title", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="title"]')).toContainText("Checkout: Complete!");
-});
+  test("Show Checkout Title", async ({ page }) => {
+    await expect(checkoutComplete.checkoutTitle).toContainText("Checkout: Complete!");
+  });
+  
+  test("Show Your Cart", async ({ page }) => {
+    await expect(checkoutComplete.shoppingCartLink).toBeVisible();
+  });
+  
+  test("Right icon is visible", async ({ page }) => {
+    await expect(checkoutComplete.ponyExpress).toBeVisible() ;
+  });
 
-test("Show Your Cart", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
-});
+  test("Show Thank you heading", async ({ page }) => {
+    await expect(checkoutComplete.completeHeader).toContainText("Thank you for your order!") ;
+  });
+  
+  test("Show Thank you description", async ({ page }) => {
+    await expect(checkoutComplete.completeText).toBeVisible() ;
+  });
 
-test("Right icon is visible", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="pony-express"]')).toBeVisible() ;
-});
-
-test("Show Thank you heading", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="complete-header"]')).toContainText("Thank you for your order!") ;
-});
-
-test("Show Thank you description", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="complete-text"]')).toBeVisible() ;
-});
-
-test("Show Cancel Button", async ({ page }) => {
-  await page.goto(BASE_URL);
-  await expect(page.locator('[data-test="back-to-products"]')).toContainText("Back Home");
-});
+  test("Show Cancel Button", async ({ page }) => {
+    await expect(checkoutComplete.backToProducts).toContainText("Back Home");
+  });
+})
